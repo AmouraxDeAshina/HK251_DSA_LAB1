@@ -1,44 +1,77 @@
 #include "OOP.h"
 
-
+Character::Character() {
+    this->hp = 0;
+    this->x = 0;
+    this->y = 0;
+}
 Character::Character(int hp, int x, int y) {
-    // STUDENT ANSWER
+    this->hp = hp;
+    this->x = x;
+    this->y = y;
 }
 
 int Character::getHp() {
-    // STUDENT ANSWER
+    return this->hp;
 }
 
 void Character::setHp(int hp) {
-    // STUDENT ANSWER
+    this->hp = hp;
 }
 
 int Character::getX() {
-    // STUDENT ANSWER
+    return this->x;
 }
 
 void Character::setX(int x) {
-    // STUDENT ANSWER
+    this->x = x;
 }
 
 int Character::getY() {
-    // STUDENT ANSWER
+    return this->y;
 }
 
 void Character::setY(int y) {
-    // STUDENT ANSWER
+    this->y = y;
 }
 
 int Character::getManhattanDistTo(Character* other) {
     // STUDENT ANSWER
+    return abs(this->x - other->x) + abs(this->y - other->y);
 }
 
 class Point
 {
-    /*
-     * STUDENT ANSWER
-     * TODO: using code template in previous question
-     */
+private:
+    double x, y;
+public:
+    Point() {
+        this->x = 0;
+        this->y = 0;
+    }
+    Point(double x, double y) {
+        this->x = x;
+        this->y = y;
+    }
+    void setX(double x) {
+        this->x = x;
+    }
+    double getX() {
+        return this->x;
+    }
+    void setY(double y) {
+        this->y = y;
+    }
+    double getY() {
+        return this->y;
+    }
+    double distanceToPoint(const Point& pointA)
+    {
+        Point A = const_cast<Point&>(pointA);
+        double X = (this->x - A.getX());
+        double Y = (this->y - A.getY());
+        return sqrt(X * X + Y * Y);
+    }
 };
 
 class Circle
@@ -50,252 +83,43 @@ private:
 public:
     Circle()
     {
-        /*
-         * STUDENT ANSWER
-         * TODO: set zero center's x-y and radius
-         */
+        this->center = Point();
+        this->radius = 0;
     }
 
     Circle(Point center, double radius)
     {
-        /*
-         * STUDENT ANSWER
-         */
+        this->center = center;
+        this->radius = radius;
     }
 
     Circle(const Circle& circle)
     {
-        /*
-         * STUDENT ANSWER
-         */
+        *this = circle;
     }
 
     void setCenter(Point point)
     {
-        /*
-         * STUDENT ANSWER
-         */
+        this->center = point;
     }
 
     void setRadius(double radius)
     {
-        /*
-         * STUDENT ANSWER
-         */
+        this->radius = radius;
     }
 
     Point getCenter() const
     {
-        /*
-         * STUDENT ANSWER
-         */
+        return this->center;
     }
 
     double getRadius() const
     {
-        /*
-         * STUDENT ANSWER
-         */
+        return this->radius;
     }
 
     void printCircle()
     {
         printf("Center: {%.2f, %.2f} and Radius %.2f\n", this->center.getX(), this->center.getY(), this->radius);
-    }
-};
-
-class Book
-{
-private:
-    char* title;
-    char* authors;
-    int publishingYear;
-
-public:
-    Book()
-    {
-        /*
-         * STUDENT ANSWER
-         * TODO: set zero publishingYear and null pointer
-         */
-    }
-
-    Book(const char* title, const char* authors, int publishingYear)
-    {
-        /*
-         * STUDENT ANSWER
-         */
-    }
-
-    Book(const Book& book)
-    {
-        /*
-         * STUDENT ANSWER
-         * TODO: deep copy constructor
-         */
-    }
-
-    void setTitle(const char* title)
-    {
-        /*
-         * STUDENT ANSWER
-         */
-    }
-
-    void setAuthors(const char* authors)
-    {
-        /*
-         * STUDENT ANSWER
-         */
-    }
-
-    void setPublishingYear(int publishingYear)
-    {
-        /*
-         * STUDENT ANSWER
-         */
-    }
-
-    char* getTitle() const
-    {
-        /*
-         * STUDENT ANSWER
-         */
-    }
-
-    char* getAuthors() const
-    {
-        /*
-         * STUDENT ANSWER
-         */
-    }
-
-    int getPublishingYear() const
-    {
-        /*
-         * STUDENT ANSWER
-         */
-    }
-
-    ~Book()
-    {
-        /*
-         * STUDENT ANSWER
-         */
-    }
-
-    void printBook() {
-        printf("%s\n%s\n%d", this->title, this->authors, this->publishingYear);
-    }
-};
-enum Color
-{
-    red,
-    green,
-    blue
-};
-enum Size
-{
-    small,
-    medium,
-    big
-};
-
-class Toy
-{
-protected:
-    double price;
-
-public:
-    Toy(double price)
-    {
-        this->price = price;
-    }
-
-    virtual void printType() = 0;
-    friend class ToyBox;
-};
-
-class CarToy : public Toy
-{
-private:
-    Color color;
-
-public:
-    CarToy(double price, Color color) : Toy(price)
-    {
-        /*
-         * STUDENT ANSWER
-         */
-    }
-
-    void printType()
-    {
-        cout << "This is a car toy\n";
-    }
-
-    friend class ToyBox;
-};
-
-class PuzzleToy : public Toy
-{
-private:
-    Size size;
-
-public:
-    PuzzleToy(double price, Size size) : Toy(price)
-    {
-        /*
-         * STUDENT ANSWER
-         */
-    }
-
-    void printType()
-    {
-        cout << "This is a puzzle toy\n";
-    }
-
-    friend class ToyBox;
-};
-
-class ToyBox
-{
-private:
-    Toy* toyBox[5];
-    int numberOfItems;
-
-public:
-    ToyBox()
-    {
-        /*
-         * STUDENT ANSWER
-         * TODO: set zero numberOfItems and nullptr toyBox
-         */
-    }
-
-    int addItem(const CarToy& carToy)
-    {
-        /*
-         * STUDENT ANSWER
-         * TODO: function add a new Car toy to the box.
-                 If successfully added, the function returns the current number of toys in the box.
-                 If the box is full, return -1.
-         */
-    }
-
-    int addItem(const PuzzleToy& puzzleToy)
-    {
-        /*
-         * STUDENT ANSWER
-         * TODO: function add a new Puzzle toy to the box.
-                 If successfully added, the function returns the current number of toys in the box.
-                 If the box is full, return -1.
-         */
-    }
-
-    void printBox()
-    {
-        for (int i = 0; i < numberOfItems; i++)
-            toyBox[i]->printType();
     }
 };
