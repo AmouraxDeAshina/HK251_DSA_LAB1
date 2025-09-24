@@ -17,10 +17,10 @@ T ArrayList<T>::removeAt(int index) {
     if index is invalid:
         throw std::out_of_range("index is out of range");
     */
-    T temp = this->data[index];
     if (index < 0 || index >= this->count)
         throw std::out_of_range("index is out of range");
-
+    
+    T temp = this->data[index];
     for (int i = index; i < this->count-1; i++) {
         this->data[i] = this->data[i + 1];
     }
@@ -63,13 +63,19 @@ void ArrayList<T>::ensureCapacity(int cap) {
     */
     if (cap >= this->capacity) {
         this->capacity *= 1.5;
-        
+        T* temp = data;
+        this->data = new T[this->capacity];
+        for (int i = 0; i < this->count; i++) {
+            this->data[i] = temp[i];
+        }
     }
 }
 
 template <class T>
 void ArrayList<T>::add(T e) {
     /* Insert an element into the end of the array. */
+    ensureCapacity(this->count + 1);
+    this->data[this->count++] = e;
 }
 
 template<class T>
@@ -79,11 +85,32 @@ void ArrayList<T>::add(int index, T e) {
         if index is invalid:
             throw std::out_of_range("the input index is out of range!");
     */
+    ensureCapacity(this->count + 1);
+    for (int i = this->count; i > index; i--) {
+        this->data[i] = this->data[i - 1];
+    }
+    this->data[index] = e;
+    this->count++;
 }
 
 template<class T>
 int ArrayList<T>::size() {
     /* Return the length (size) of the array */
-    return 0;
+    return this->count;
+}
+
+int sum(vector<int> x, int L, int R) {
+    int s = 0;
+    for (int i = L; i <= R; i++) {
+        s += x[i];
+    }
+    return s;
+}
+int equalSumIndex(vector<int>& nums) {
+    for (int i = 0; i < nums.size() - 1; i++) {
+        if (sum(nums,0, i - 1) == sum(nums,i + 1, nums.size())) {
+            return i;
+        }
+    }
 }
 
